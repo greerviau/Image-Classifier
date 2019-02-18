@@ -29,7 +29,7 @@ def getCifar10Classes(dataDir):
     cifarClasses = np.array(cifarClasses)
     return cifarClasses
 
-def getCifar10Data(data_dir, negatives=False):
+def getCifar10Data(dataDir, negatives=False):
 
     trainingData = []
 

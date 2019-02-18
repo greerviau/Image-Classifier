@@ -12,7 +12,7 @@ imageData = cv2.imread(args['image'])
 inputData = formatImage(imageData)
 
 #LOAD CUSTOM CLASSES
-#classes = os.listdir('D:/Data/CatsAndDogs/train')
+#classes = os.listdir('D:/Data/flowers')
 #LOAD CIFAR10 CLASSES
 classes = getCifar10Classes('data')
 

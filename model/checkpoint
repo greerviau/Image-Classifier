@@ -1,3 +1,0 @@
-model_checkpoint_path: "D:\\DeepLearning\\ImageClassifier/model/model.ckpt"
-all_model_checkpoint_paths: "D:\\DeepLearning\\ImageClassifier/checkpoints/checkpoint.ckpt"
-all_model_checkpoint_paths: "D:\\DeepLearning\\ImageClassifier/model/model.ckpt"

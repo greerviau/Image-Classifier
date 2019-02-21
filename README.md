@@ -1,13 +1,14 @@
 # Image-Classifier
+
+## TO DO
+* Improve model architecture for better generalization
+
 ## Usage
 ```
 pip install -r requirements.txt
 python3 train.py
 python3 classify.py --image <image-path>
 ```
-
-## TO DO
-* Improve model architecture for better generalization
 
 Defaulted to use Cifar10 dataset, but can be applied to a local dataset.
 

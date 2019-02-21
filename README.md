@@ -4,6 +4,12 @@
 * Improve model architecture for better generalization
 
 ## Usage
+1. Download cifar10 batches [here](https://www.cs.toronto.edu/~kriz/cifar.html)
+2. Extract to a directory
+3. In train.py specify path to extracted directory
+```
+xTrain, yTrain, xTest, yTest = getCifar10Data('<path-to-batches>')
+```
 ```
 pip3 install -r requirements.txt
 python3 train.py

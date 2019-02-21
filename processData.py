@@ -1,6 +1,7 @@
 import numpy as np
 import os, cv2
 from tqdm import tqdm
+import matplotlib.pyplot as plt
 
 def rotateImage(img,deg):
     rows,cols,depth = img.shape
@@ -47,7 +48,7 @@ def getCifar10Data(dataDir, negatives=False):
             cifarTrainData = np.vstack((cifarTrainData, cifarTrainDataDict[b'data']))
         cifarTrainLabels += cifarTrainDataDict[b'labels']
 
-    cifarTrainData = cifarTrainData.reshape((len(cifarTrainData), 3, 32, 32))
+    cifarTrainData = cifarTrainData.reshape([-1, 3, 32, 32])
     cifarTrainData = cifarTrainData / 255
     cifarTrainData = cifarTrainData.transpose([0, 2, 3, 1]).astype(np.float32)
 
@@ -65,7 +66,7 @@ def getCifar10Data(dataDir, negatives=False):
     cifarTestData = cifarTestDataDict[b'data']
     cifarTestLabels = cifarTestDataDict[b'labels']
 
-    cifarTestData = cifarTestData.reshape((len(cifarTestData), 3, 32, 32))
+    cifarTestData = cifarTestData.reshape([-1, 3, 32, 32])
     cifarTestData = cifarTestData / 255
     cifarTestData = cifarTestData.transpose([0, 2, 3, 1]).astype(np.float32)
 
@@ -88,10 +89,10 @@ def getCifar10Data(dataDir, negatives=False):
     xTest = list(testData[:,0])
     yTest = list(testData[:,1])
 
-    print(xTrain[0].shape)
-    print(yTrain[0].shape)
-    print(xTest[0].shape)
-    print(yTest[0].shape)
+    #print(xTrain[0].shape)
+    #print(yTrain[0].shape)
+    #print(xTest[0].shape)
+    #print(yTest[0].shape)
 
     return xTrain, yTrain, xTest, yTest
 

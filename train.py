@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import cv2, os, random
-from processData import getData, getCifar10Data
+from processData import getData, getCifar10Data, rotateImage
 from model import convoNeuralNet, initVariables
 
 if __name__ == "__main__":
@@ -36,8 +36,6 @@ if __name__ == "__main__":
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         #saver.restore(sess, './checkpoints/checkpoint.ckpt')
-        totalAccuracy = []
-        totalLoss = []
         for epoch in range(hmEpochs):
             print("\nEpoch: {}/{}".format(epoch+1,hmEpochs))
 
@@ -50,7 +48,7 @@ if __name__ == "__main__":
                 xBatch = np.array(xTrain[i:i+batchSize])
                 yBatch = np.array(yTrain[i:i+batchSize])
                 #OPTIMIZIZE FOR BATCH
-                sess.run(optimizer, feed_dict={x: xBatch, y: yBatch, keepRate: 5.})
+                sess.run(optimizer, feed_dict={x: xBatch, y: yBatch, keepRate: 75.})
 
                 #GET LOSS AND ACCURACY FOR BATCH
                 l, a = sess.run([cost, accuracy], feed_dict={x: xBatch, y: yBatch, keepRate: 1.})
@@ -59,7 +57,7 @@ if __name__ == "__main__":
                 avgLoss = sum(loss)/len(loss)
                 avgAcc = sum(acc)/len(acc)
 
-                print("\rBatch: {:4d}/{}".format(batch,batches)+" - loss: " + "{:7.3f}".format(avgLoss) + " - acc: " + "{:.3f}".format(avgAcc),end="")
+                print("\rBatch: {:4d}/{} - loss: {:7.3f} - acc: {:.3f}".format(batch+1, batches, avgLoss, avgAcc),end="")
                 batch+=1
 
             #VALIDATION (SPLIT INTO BATCHES FOR MEMORY LIMITATIONS)
@@ -78,9 +76,7 @@ if __name__ == "__main__":
             #CALCULATE AVERAGE LOSS AND ACCURACY FOR VALIDATION
             avgValLoss = sum(valLoss)/len(valLoss)
             avgValAcc = sum(valAcc)/len(valAcc)
-            totalAccuracy.append(avgValAcc)
-            totalLoss.append(avgValLoss)
-            print(" - valLoss: " + "{:.3f}".format(avgValLoss) + " - valAcc: " + "{:.3f}".format(avgValAcc))
+            print(" - valLoss: {:.3f} - valAcc: {:.3f}".format(avgValLoss, avgValAcc))
 
             #CHECKPOINT
             if epoch != 0 and epoch % 10 == 0:
@@ -94,9 +90,22 @@ if __name__ == "__main__":
             xTrain[:], yTrain[:] = zip(*zipped)
 
         #SAVE FINAL MODEL
-        highestAcc = max(totalAccuracy)*100
-        lowestLoss = min(totalLoss)
-        print("\nHighest Accuracy: {:.3f}% - Lowest Loss: {:.3f}".format(highestAcc,lowestLoss))
+        valBatchSize = int(len(xTest)*0.1)
+        finalValLoss = []
+        finalValAcc = []
+        for t in range(0,len(xTest),valBatchSize):
+            xBatch = np.array(xTest[t:t+valBatchSize])
+            yBatch = np.array(yTest[t:t+valBatchSize])
+
+            #GET LOSS AND ACCURACY FOR BATCH
+            vl, va = sess.run([cost, accuracy], feed_dict={x: xBatch, y: yBatch, keepRate: 1.})
+            finalValLoss.append(vl)
+            finalValAcc.append(va)
+
+        #CALCULATE AVERAGE LOSS AND ACCURACY FOR VALIDATION
+        avgValLoss = sum(finalValLoss)/len(finalValLoss)
+        avgValAcc = (sum(finalValAcc)/len(finalValAcc))*100
+        print("\nFinal Accuracy: {:.3f}% - Final Loss: {:.3f}".format(avgValAcc,avgValLoss))
         savePath = "{}/model/model.ckpt".format(os.getcwd())
         saver.save(sess, savePath)
         print("Model saved - {}".format(savePath))

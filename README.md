@@ -1,6 +1,6 @@
 # Image-Classifier
 
-## TO DO
+## TODO
 * Improve model architecture for better generalization
 
 ## Usage

@@ -1,7 +1,6 @@
 import numpy as np
 import os, cv2
 from tqdm import tqdm
-import matplotlib.pyplot as plt
 
 def rotateImage(img,deg):
     rows,cols,depth = img.shape

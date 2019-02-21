@@ -9,7 +9,7 @@ if __name__ == "__main__":
     #LOAD CUSTOM DATASET
     #xTrain, yTrain, xTest, yTest = getData(datasetPath='D:/Data/flowers')
     #LOAD CIFAR10 DATASET
-    xTrain, yTrain, xTest, yTest = getCifar10Data('data')
+    xTrain, yTrain, xTest, yTest = getCifar10Data('D:\Data\cifar10')
 
     #INIT VARIABLES
     nInput = len(xTrain[0])

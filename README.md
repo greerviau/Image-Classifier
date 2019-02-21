@@ -19,7 +19,7 @@ In train.py specify path to extracted directory
 ```
 xTrain, yTrain, xTest, yTest = getCifar10Data('<path-to-batches>')
 ```
-### LOCAL DATASET
+### Local Dataset
 In train.py specify path to dataset directory
 * Make sure that directory for dataset contains folder spearated images
 * Folder names will be used as category labels

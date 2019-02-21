@@ -3,7 +3,7 @@
 ## TODO
 * Improve model architecture for better generalization
 
-## Instalation
+## Installation
 Git clone the repository and ```cd``` into the directory
 ```
 git clone https://github.com/greerviau/Image-Classifier.git && cd Image-Classifier

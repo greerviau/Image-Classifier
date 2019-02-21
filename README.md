@@ -3,13 +3,18 @@
 ## TODO
 * Improve model architecture for better generalization
 
-## Usage
-1. Download CIFAR-10 batches [here](https://www.cs.toronto.edu/~kriz/cifar.html) (python version)
-2. Extract to a directory
-3. In train.py specify path to extracted directory
+## Instalation
+Git clone the repository and ```cd``` into the directory
+```
+git clone https://github.com/greerviau/Image-Classifier.git && cd Image-Classifier
+```
+Download CIFAR-10 batches [here](https://www.cs.toronto.edu/~kriz/cifar.html) (python version) and extract
+In train.py specify path to extracted directory
 ```
 xTrain, yTrain, xTest, yTest = getCifar10Data('<path-to-batches>')
 ```
+
+## Usage
 ```
 pip3 install -r requirements.txt
 python3 train.py

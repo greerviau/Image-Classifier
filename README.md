@@ -12,11 +12,19 @@ Install the required packages
 ```
 pip3 install -r requirements.txt
 ```
+### CIFAR-10
 Download CIFAR-10 batches [here](https://www.cs.toronto.edu/~kriz/cifar.html) (python version) and extract
 
 In train.py specify path to extracted directory
 ```
 xTrain, yTrain, xTest, yTest = getCifar10Data('<path-to-batches>')
+```
+### LOCAL DATASET
+In train.py specify path to dataset directory
+* Make sure that directory for dataset contains folder spearated images
+* Folder names will be used as category labels
+```
+xTrain, yTrain, xTest, yTest = getData(datasetPath='<path-to-dataset>')
 ```
 
 ## Usage
@@ -24,7 +32,5 @@ xTrain, yTrain, xTest, yTest = getCifar10Data('<path-to-batches>')
 python3 train.py
 python3 classify.py --image <image-path>
 ```
-
-Defaulted to use CIFAR-10 dataset, but can be applied to a local dataset.
 
 ![image-classifier](https://user-images.githubusercontent.com/36581610/52970211-063d7700-3381-11e9-96fd-9d517f11267b.PNG)

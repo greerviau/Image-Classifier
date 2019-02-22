@@ -48,7 +48,7 @@ if __name__ == "__main__":
                 xBatch = np.array(xTrain[i:i+batchSize])
                 yBatch = np.array(yTrain[i:i+batchSize])
                 #OPTIMIZIZE FOR BATCH
-                sess.run(optimizer, feed_dict={x: xBatch, y: yBatch, keepRate: 75.})
+                sess.run(optimizer, feed_dict={x: xBatch, y: yBatch, keepRate: .5})
 
                 #GET LOSS AND ACCURACY FOR BATCH
                 l, a = sess.run([cost, accuracy], feed_dict={x: xBatch, y: yBatch, keepRate: 1.})

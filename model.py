@@ -20,29 +20,37 @@ def convoNeuralNet(x, nClasses, rate):
     #CONV LAYER 1
     conv1 = tf.nn.conv2d(x,conv1Filter,strides=[1,1,1,1],padding="SAME")
     conv1 = tf.nn.relu(conv1)
-    conv1 = tf.nn.max_pool(conv1,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
-    conv1 = tf.layers.batch_normalization(conv1)
+
+    #POOL LAYER 1
+    pool1 = tf.nn.max_pool(conv1,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
+    pool1 = tf.layers.batch_normalization(pool1)
 
     #CONV LAYER 2
-    conv2 = tf.nn.conv2d(conv1,conv2Filter,strides=[1,1,1,1],padding="SAME")
+    conv2 = tf.nn.conv2d(pool1,conv2Filter,strides=[1,1,1,1],padding="SAME")
     conv2 = tf.nn.relu(conv2)
-    conv2 = tf.nn.max_pool(conv2,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
-    conv2 = tf.layers.batch_normalization(conv2)
+
+    #POOL LAYER 2
+    pool2 = tf.nn.max_pool(conv2,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
+    pool2 = tf.layers.batch_normalization(pool2)
 
     #CONV LAYER 3
-    conv3 = tf.nn.conv2d(conv2,conv3Filter,strides=[1,1,1,1],padding="SAME")
+    conv3 = tf.nn.conv2d(pool2,conv3Filter,strides=[1,1,1,1],padding="SAME")
     conv3 = tf.nn.relu(conv3)
-    conv3 = tf.nn.max_pool(conv3,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
-    conv3 = tf.layers.batch_normalization(conv3)
+
+    #POOL LAYER 3
+    pool3 = tf.nn.max_pool(conv3,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
+    pool3 = tf.layers.batch_normalization(pool3)
 
     #CONV LAYER 4
-    conv4 = tf.nn.conv2d(conv3,conv4Filter,strides=[1,1,1,1],padding="SAME")
+    conv4 = tf.nn.conv2d(pool3,conv4Filter,strides=[1,1,1,1],padding="SAME")
     conv4 = tf.nn.relu(conv4)
-    conv4 = tf.nn.max_pool(conv4,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
-    conv4 = tf.layers.batch_normalization(conv4)
+
+    #POOL LAYER 4
+    pool4 = tf.nn.max_pool(conv4,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
+    pool4 = tf.layers.batch_normalization(pool4)
 
     #FLATTEN
-    flat = tf.contrib.layers.flatten(conv4)
+    flat = tf.contrib.layers.flatten(pool4)
 
     #FULLY CONNECTED LAYER 1
     fc1 = tf.contrib.layers.fully_connected(inputs=flat, num_outputs=128, activation_fn=tf.nn.relu)

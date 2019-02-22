@@ -13,7 +13,6 @@ def convoNeuralNet(x, nClasses, rate):
     conv1Filter = tf.Variable(tf.truncated_normal(shape=[3, 3, 3, 64], mean=0, stddev=0.08))
     conv2Filter = tf.Variable(tf.truncated_normal(shape=[3, 3, 64, 128], mean=0, stddev=0.08))
     conv3Filter = tf.Variable(tf.truncated_normal(shape=[3, 3, 128, 256], mean=0, stddev=0.08))
-    conv4Filter = tf.Variable(tf.truncated_normal(shape=[3, 3, 256, 512], mean=0, stddev=0.08))
 
     #x = tf.reshape(x, shape=[-1,64,64,3])
 
@@ -41,28 +40,15 @@ def convoNeuralNet(x, nClasses, rate):
     pool3 = tf.nn.max_pool(conv3,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
     pool3 = tf.layers.batch_normalization(pool3)
 
-    #CONV LAYER 4
-    conv4 = tf.nn.conv2d(pool3,conv4Filter,strides=[1,1,1,1],padding="SAME")
-    conv4 = tf.nn.relu(conv4)
-
-    #POOL LAYER 4
-    pool4 = tf.nn.max_pool(conv4,ksize=[1,2,2,1],strides=[1,2,2,1],padding="SAME")
-    pool4 = tf.layers.batch_normalization(pool4)
-
     #FLATTEN
-    flat = tf.contrib.layers.flatten(pool4)
+    flat = tf.contrib.layers.flatten(pool3)
 
     #FULLY CONNECTED LAYER 1
     fc1 = tf.contrib.layers.fully_connected(inputs=flat, num_outputs=128, activation_fn=tf.nn.relu)
     fc1 = tf.layers.batch_normalization(fc1)
     fc1 = tf.nn.dropout(fc1, rate)
 
-    #FULLY CONNECTED LAYER 2
-    fc2 = tf.contrib.layers.fully_connected(inputs=fc1, num_outputs=256, activation_fn=tf.nn.relu)
-    fc2 = tf.layers.batch_normalization(fc2)
-    fc2 = tf.nn.dropout(fc2, rate)
-
     #OUTPUT LAYER
-    out = tf.contrib.layers.fully_connected(inputs=fc2, num_outputs=nClasses, activation_fn=None)
+    out = tf.contrib.layers.fully_connected(inputs=fc1, num_outputs=nClasses, activation_fn=None)
 
     return out
